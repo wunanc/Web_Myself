@@ -1,0 +1,97 @@
+name: Sync GitHub Languages
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天UTC 0点运行（北京时间8点）
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  generate-language-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Fetch GitHub language stats and generate data.js
+        env:
+          GH_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat << EOF > sync.js
+          const axios = require('axios');
+          const fs = require('fs');
+          const username = process.env.GH_USER;
+          const token = process.env.GITHUB_TOKEN;
+
+          async function fetchRepos(page = 1, all = []) {
+            const res = await axios.get(
+              \`https://api.github.com/users/\${username}/repos?per_page=100&page=\${page}\`,
+              { headers: { Authorization: \`Bearer \${token}\` } }
+            );
+            all = all.concat(res.data.filter(r => !r.private));
+            if (res.data.length === 100) {
+              return fetchRepos(page + 1, all);
+            }
+            return all;
+          }
+
+          async function fetchLanguages(repos) {
+            let repoLangs = [];
+            for (const repo of repos) {
+              const res = await axios.get(repo.languages_url, { headers: { Authorization: \`Bearer \${token}\` } });
+              repoLangs.push(res.data);
+            }
+            return repoLangs;
+          }
+
+          (async () => {
+            const repos = await fetchRepos();
+            if (repos.length === 0) {
+              fs.writeFileSync('data.js', 'window.languageStats = [];\n');
+              return;
+            }
+            const repoLangs = await fetchLanguages(repos);
+
+            // 汇总所有语言用字节数
+            const langTotals = {};
+            repoLangs.forEach(langs => {
+              for (const [lang, bytes] of Object.entries(langs)) {
+                langTotals[lang] = (langTotals[lang] || 0) + bytes;
+              }
+            });
+            const sum = Object.values(langTotals).reduce((a, b) => a + b, 0);
+            const percent = {};
+            Object.entries(langTotals).forEach(([k, v])=>{
+              percent[k] = Math.round(v / sum * 100); // 取整，无小数
+            });
+            const result = {
+              updated: new Date().toISOString(),
+              percent,
+              raw: langTotals
+            };
+
+            fs.writeFileSync('data.js',
+              'window.languageStats = ' + JSON.stringify(result, null, 2) + ';\n'
+            );
+            console.log('Language stats saved to data.js');
+          })();
+          EOF
+
+          node sync.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.js
+          git commit -m "chore: update GitHub language stats [auto]" || echo "Nothing to commit"
+          git push
