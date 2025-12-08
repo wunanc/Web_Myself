@@ -10,7 +10,7 @@ import urllib.error
 
 # 存储手机端app信息
 mobile_app_info = {
-    "app": "none",
+    "app": "未知",
     "timestamp": ""
 }
 
@@ -124,12 +124,12 @@ class MainHandler(BaseHTTPRequestHandler):
             pc_window = pc_info.get('window_title', '无法获取')
             pc_process = pc_info.get('process_name', '')
         else:
-            pc_window = '无法连接到PC服务'
+            pc_window = '未知'
             pc_process = ''
         
         # 判断是否都无法获取信息
         # 手机无法获取：app为"none"；PC无法获取：pc_info为None
-        if mobile_app_info["app"] == "none" and pc_info is None:
+        if mobile_app_info["app"] == "未知" and pc_info is None:
             si = True
         else:
             si = False

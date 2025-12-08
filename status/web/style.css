@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+body {
+    background-color: #3498db; /* 蓝色背景，如用户要求 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 信息框容器 */
+.info-boxes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 单个信息框样式 */
+.info-box {
+    background-color: rgba(0, 0, 0, 0.7); /* 黑色半透明 */
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 信息框悬停效果 */
+.info-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* 信息框内容 */
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 第一框样式 */
+#box1 .title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+#box1 .subtitle {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* 状态标题样式 */
+.status-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+/* 状态指示器 */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.status-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #666;
+    transition: background-color 0.3s ease;
+}
+
+.status-dot.active {
+    background-color: #2ecc71; /* 绿色表示醒着 */
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
+}
+
+.status-text {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+/* 第三框样式 */
+.pc-info {
+    font-size: 1.6rem;
+    color: #ffffff;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.pc-status {
+    color: #f39c12;
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.iphone-status {
+    color: #f39c12;
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.app-name {
+    color: #95a5a6;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+/* 第四框样式 */
+.license-info {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.github-link {
+    font-size: 1.3rem;
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.github-link i {
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+.project-name {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.copyright {
+    font-size: 0.95rem;
+    color: #95a5a6;
+    margin-top: 8px;
+}
+
+/* 响应式调整 */
+@media (max-width: 600px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .info-box {
+        padding: 20px 22px;
+    }
+    
+    #box1 .title {
+        font-size: 2rem;
+    }
+    
+    .status-text, .mac-info {
+        font-size: 1.4rem;
+    }
+}
