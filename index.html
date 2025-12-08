@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC玩家与开发者 - 个人网站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --mc-green: #3CB371;
+            --mc-dark-green: #2E8B57;
+            --mc-dirt: #8B7355;
+            --mc-stone: #808080;
+            --mc-wood: #8B4513;
+            --mc-water: #1E90FF;
+            --mc-lava: #FF4500;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+            --bg-light: #f8f9fa;
+            --bg-dark: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            background-color: rgba(30, 30, 30, 0.85);
+            border-radius: 15px;
+            border: 3px solid var(--mc-green);
+            box-shadow: 0 0 30px rgba(60, 179, 113, 0.5);
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid var(--mc-green);
+            margin: 0 auto 25px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(60, 179, 113, 0.7);
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .nickname {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            color: var(--mc-green);
+            text-shadow: 0 0 10px rgba(60, 179, 113, 0.8);
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--mc-green);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--mc-green);
+            border-radius: 2px;
+        }
+        
+        /* GitHub语言统计区域 */
+        .github-section {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .github-stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .chart-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .languages-list {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--mc-green);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .language-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .language-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .language-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .language-fill {
+            height: 100%;
+            background-color: var(--mc-green);
+            border-radius: 5px;
+        }
+        
+        /* Minecraft玩家信息区域 */
+        .mc-section {
+            background-color: var(--bg-dark);
+        }
+        
+        .mc-info-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+        
+        .mc-card {
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            padding: 30px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+            border: 2px solid var(--mc-dirt);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .mc-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+        
+        .mc-card h3 {
+            font-size: 1.8rem;
+            color: var(--mc-green);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .mc-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .mc-stat {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--mc-stone);
+        }
+        
+        .mc-stat i {
+            font-size: 2rem;
+            color: var(--mc-green);
+            margin-bottom: 10px;
+        }
+        
+        .mc-stat .label {
+            display: block;
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .mc-stat .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 3px solid var(--mc-green);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 50%;
+            color: var(--mc-green);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--mc-green);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .nickname {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .github-stats-container, .mc-info-container {
+                flex-direction: column;
+            }
+            
+            .chart-container, .languages-list, .mc-card {
+                max-width: 100%;
+            }
+        }
+        
+        /* 加载动画 */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid var(--mc-green);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="avatar">
+                <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="用户头像">
+            </div>
+            <h1 class="nickname">方块编码师</h1>
+            <p class="tagline">热爱Minecraft的开发者，在方块世界与代码世界之间穿梭，创造无限可能</p>
+            <div class="hero-stats">
+                <div class="mc-stat" style="display: inline-block; margin: 0 15px;">
+                    <i class="fas fa-code"></i>
+                    <span class="label">编程语言</span>
+                    <span class="value">6+</span>
+                </div>
+                <div class="mc-stat" style="display: inline-block; margin: 0 15px;">
+                    <i class="fas fa-cube"></i>
+                    <span class="label">MC游戏时间</span>
+                    <span class="value">1500+小时</span>
+                </div>
+                <div class="mc-stat" style="display: inline-block; margin: 0 15px;">
+                    <i class="fab fa-github"></i>
+                    <span class="label">GitHub项目</span>
+                    <span class="value">20+</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub语言统计区域 -->
+    <section class="content-section github-section">
+        <div class="container">
+            <h2 class="section-title">GitHub 语言使用占比</h2>
+            <div class="loader" id="github-loader">
+                <div class="spinner"></div>
+                <p>正在加载GitHub语言统计数据...</p>
+            </div>
+            <div class="github-stats-container" id="github-stats">
+                <!-- 这里将通过JavaScript动态填充 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Minecraft玩家信息区域 -->
+    <section class="content-section mc-section">
+        <div class="container">
+            <h2 class="section-title">Minecraft 玩家信息</h2>
+            <div class="mc-info-container">
+                <div class="mc-card">
+                    <h3>玩家概况</h3>
+                    <div class="mc-stats">
+                        <div class="mc-stat">
+                            <i class="fas fa-user"></i>
+                            <span class="label">玩家名称</span>
+                            <span class="value">BlockCoder</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-medal"></i>
+                            <span class="label">成就点数</span>
+                            <span class="value">1,850</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-clock"></i>
+                            <span class="label">游戏时长</span>
+                            <span class="value">1,524小时</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="label">加入日期</span>
+                            <span class="value">2018-06-15</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mc-card">
+                    <h3>游戏统计</h3>
+                    <div class="mc-stats">
+                        <div class="mc-stat">
+                            <i class="fas fa-mountain"></i>
+                            <span class="label">探索区域</span>
+                            <span class="value">12,500区块</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-hard-hat"></i>
+                            <span class="label">挖掘方块</span>
+                            <span class="value">245,621</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-home"></i>
+                            <span class="label">建造建筑</span>
+                            <span class="value">47座</span>
+                        </div>
+                        <div class="mc-stat">
+                            <i class="fas fa-skull-crossbones"></i>
+                            <span class="label">击败怪物</span>
+                            <span class="value">8,942只</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com" class="social-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://minecraft.net" class="social-link" target="_blank">
+                    <i class="fas fa-cube"></i>
+                </a>
+                <a href="https://linkedin.com" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:example@example.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2023 方块编码师 - MC玩家与开发者 | 本网站数据定期更新</p>
+            <p class="copyright">GitHub语言数据最后更新: <span id="last-updated">加载中...</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // 从GitHub获取语言数据
+        async function fetchLanguageStats() {
+            const loader = document.getElementById('github-loader');
+            const statsContainer = document.getElementById('github-stats');
+            
+            loader.style.display = 'block';
+            statsContainer.innerHTML = '';
+            
+            try {
+                // 由于直接获取JS文件会有跨域问题，我们使用raw.githubusercontent.com
+                // 注意：实际部署时可能需要使用CORS代理或后端API来解决跨域问题
+                const response = await fetch('https://raw.githubusercontent.com/wunanc/Web_Myself/main/data.js');
+                const text = await response.text();
+                
+                // 提取数据部分
+                const dataMatch = text.match(/window\.languageStats\s*=\s*({[\s\S]*?});/);
+                if (!dataMatch) {
+                    throw new Error('无法解析数据');
+                }
+                
+                // 将字符串转换为对象
+                const dataStr = dataMatch[1];
+                const languageStats = eval('(' + dataStr + ')');
+                
+                // 更新页面
+                updateLanguageStats(languageStats);
+                
+            } catch (error) {
+                console.error('获取语言数据失败:', error);
+                // 如果获取失败，使用示例数据
+                useFallbackData();
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+        
+        // 使用备选数据（当无法获取GitHub数据时）
+        function useFallbackData() {
+            const fallbackData = {
+                "updated": "2025-12-08T02:44:22.652Z",
+                "percent": {
+                    "Python": 2,
+                    "Java": 97,
+                    "TypeScript": 1,
+                    "CSS": 0,
+                    "Vue": 0,
+                    "JavaScript": 0
+                },
+                "raw": {
+                    "Python": 26778,
+                    "Java": 1056506,
+                    "TypeScript": 7935,
+                    "CSS": 966,
+                    "Vue": 181,
+                    "JavaScript": 3
+                }
+            };
+            
+            updateLanguageStats(fallbackData);
+        }
+        
+        // 更新语言统计数据到页面
+        function updateLanguageStats(languageStats) {
+            const statsContainer = document.getElementById('github-stats');
+            const lastUpdatedSpan = document.getElementById('last-updated');
+            
+            // 更新最后更新时间
+            const updatedDate = new Date(languageStats.updated);
+            lastUpdatedSpan.textContent = updatedDate.toLocaleString('zh-CN');
+            
+            // 准备图表数据
+            const labels = Object.keys(languageStats.percent);
+            const data = Object.values(languageStats.percent);
+            const colors = [
+                '#3CB371', '#FF6347', '#4682B4', '#FFD700', '#9370DB', '#20B2AA',
+                '#FF4500', '#32CD32', '#1E90FF', '#FF69B4', '#8A2BE2', '#5F9EA0'
+            ];
+            
+            // 创建图表容器
+            const chartHtml = `
+                <div class="chart-container">
+                    <canvas id="languageChart" width="400" height="400"></canvas>
+                </div>
+            `;
+            
+            // 创建语言列表容器
+            let languagesListHtml = '<div class="languages-list"><h3 style="margin-bottom: 20px; text-align: center;">语言详情</h3>';
+            
+            // 按百分比排序
+            const sortedLanguages = Object.entries(languageStats.percent)
+                .sort((a, b) => b[1] - a[1]);
+            
+            sortedLanguages.forEach(([language, percent], index) => {
+                const rawValue = languageStats.raw[language] || 0;
+                languagesListHtml += `
+                    <div class="language-item">
+                        <div>
+                            <div class="language-name">${language}</div>
+                            <div class="language-bar">
+                                <div class="language-fill" style="width: ${percent}%; background-color: ${colors[index % colors.length]}"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: 700;">${percent}%</div>
+                            <div style="font-size: 0.9rem; color: #666;">${rawValue.toLocaleString()} 字符</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            languagesListHtml += '</div>';
+            
+            // 更新容器内容
+            statsContainer.innerHTML = chartHtml + languagesListHtml;
+            
+            // 初始化图表
+            initLanguageChart(labels, data, colors);
+        }
+        
+        // 初始化语言饼图
+        function initLanguageChart(labels, data, colors) {
+            const ctx = document.getElementById('languageChart').getContext('2d');
+            
+            // 创建饼图
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: '#2a2a2a',
+                        borderWidth: 2,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                },
+                                color: '#333'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    return `${label}: ${value}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取语言统计数据
+            fetchLanguageStats();
+            
+            // 为MC卡片添加悬停效果
+            const mcCards = document.querySelectorAll('.mc-card');
+            mcCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.borderColor = '#3CB371';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.borderColor = '#8B7355';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
