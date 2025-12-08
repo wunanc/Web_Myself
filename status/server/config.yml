@@ -1,0 +1,15 @@
+# *号为必填项
+#是否开启电脑端读取窗口信息服务 *
+enable_windowsPC_service: true
+#电脑端ip地址 *
+windowsPC_service_ip: 127.0.0.1
+#电脑端端口号 *
+windowsPC_service_port: 5201
+
+#是否开启手机端监听服务 *
+enable_mobile_listen_service: true
+#手机端监听端口号（请确保手机和电脑在同一局域网内） *
+mobile_listen_port: 5202
+
+#服务器外部访问端口（如使用反向代理请留空）
+server_external_port: 5203

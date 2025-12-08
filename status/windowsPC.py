@@ -72,7 +72,7 @@ class WindowHandler(BaseHTTPRequestHandler):
 
 # 启动服务器
 def run_server():
-    server_address = ('', 56566)
+    server_address = ('', 5201)
     httpd = HTTPServer(server_address, WindowHandler)
     
     # 获取本机IP
@@ -86,7 +86,7 @@ def run_server():
     finally:
         s.close()
     
-    print(f"窗口信息服务已在端口56001启动")
+    print(f"窗口信息服务已在端口5201启动")
     print(f"返回格式: JSON with UTF-8 encoding")
     print("按 Ctrl+C 停止")
     
