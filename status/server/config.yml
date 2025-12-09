@@ -8,8 +8,8 @@ windowsPC_service_port: 5201
 
 #是否开启手机端监听服务 *
 enable_mobile_listen_service: true
-#手机端监听端口号（请确保手机和电脑在同一局域网内） *
+#手机端监听端口号 *
 mobile_listen_port: 5202
 
-#服务器外部访问端口（如使用反向代理请留空）
+#服务器外部访问端口 *
 server_external_port: 5203

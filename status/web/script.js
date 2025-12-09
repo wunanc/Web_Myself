@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Project Sleepy 状态面板已加载');
     
     // API 配置
-    const API_URL = 'http://d5.mcksj.top:36669/';
+    const API_URL = 'http://127.0.0.1:5203';
     
     // 获取状态数据
     function fetchStatusData() {
@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const pcStatus = document.querySelector('.pc-status');
         if (pcStatus) {
             pcStatus.textContent = data.pc;
-            pcStatus.style.color = '#3498db';
+            pcStatus.style.color = '#4ef34eff';
         }
         
         // 更新iPhone状态（41行）- 蓝色
         const iphoneStatus = document.querySelector('.iphone-status');
         if (iphoneStatus) {
             iphoneStatus.textContent = data.mobile;
-            iphoneStatus.style.color = '#3498db';
+            iphoneStatus.style.color = '#4ef34eff';
         }
         
         // 获取状态指示灯
@@ -117,8 +117,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // 控制台欢迎信息
-    console.log('%c Project Sleepy 状态面板 %c\n一个简洁的状态显示界面\n\n©2025 Mars (maao.cc)² 保留所有权利。', 
-        'background: #2c3e50; color: #ecf0f1; padding: 8px 16px; border-radius: 4px; font-weight: bold;',
-        'color: #7f8c8d;');
 });

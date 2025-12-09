@@ -1,3 +1,15 @@
+@font-face {
+font-family: 'minecraft';
+src: url('data/fonts/minecraft.ttf') format('truetype');
+}
+
+/*
+.minecraft-font {
+font-family: 'minecraft';
+font-size: 24px;
+}
+*/
+
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +18,29 @@
 }
 
 body {
-    background-color: #3498db; /* 蓝色背景，如用户要求 */
+    background-color: #3498db;
+    background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEMZatpODq6sAyNyI7GTccR4EN11WnNEgAC1yMAApKDwFWRLf75AzO8ezYE.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+
+/* 添加深色遮罩层，确保文字可读性 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* 轻微遮罩，增强背景图上的文字可读性 */
+    z-index: -1;
 }
 
 .container {
@@ -30,23 +59,24 @@ body {
     gap: 16px;
 }
 
-/* 单个信息框样式 */
+/* 单个信息框样式 - 改为更透明、边框更不明显的浅色毛玻璃 */
 .info-box {
-    background-color: rgba(0, 0, 0, 0.7); /* 黑色半透明 */
+    background-color: rgba(255, 255, 255, 0.08); /* 改为0.08，更透明 */
     border-radius: 12px;
     padding: 24px 28px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* 阴影更淡 */
+    backdrop-filter: blur(15px) saturate(160%); /* 增加模糊到15px */
+    -webkit-backdrop-filter: blur(15px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.12); /* 边框改为0.12不透明度 */
+    color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* 信息框悬停效果 */
 .info-box:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    background-color: rgba(255, 255, 255, 0.12); /* 悬停时稍微加深 */
 }
 
 /* 信息框内容 */
@@ -63,11 +93,12 @@ body {
     margin-bottom: 4px;
     letter-spacing: 1px;
     text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #box1 .subtitle {
     font-size: 1.2rem;
-    color: #e0e0e0;
+    color: #f0f0f0;
     text-align: center;
     font-weight: 300;
     letter-spacing: 2px;
@@ -130,7 +161,7 @@ body {
 }
 
 .app-name {
-    color: #95a5a6;
+    color: #e8e8e8;
     font-size: 1.4rem;
     font-weight: 400;
 }
@@ -138,7 +169,7 @@ body {
 /* 第四框样式 */
 .license-info {
     font-size: 1.1rem;
-    color: #e0e0e0;
+    color: #f0f0f0;
     margin-bottom: 8px;
     line-height: 1.5;
 }
@@ -160,14 +191,14 @@ body {
 
 .project-name {
     font-size: 1.2rem;
-    color: #bdc3c7;
+    color: #e8e8e8;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
 .copyright {
     font-size: 0.95rem;
-    color: #95a5a6;
+    color: #e0e0e0;
     margin-top: 8px;
 }
 

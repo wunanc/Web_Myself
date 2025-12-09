@@ -8,6 +8,11 @@ import yaml
 import urllib.request
 import urllib.error
 
+# 日志输出函数，带时间戳
+def log(message):
+    timestamp = datetime.now().strftime("%H:%M:%S")
+    print(f"[{timestamp}] {message}")
+
 # 存储手机端app信息
 mobile_app_info = {
     "app": "未知",
@@ -32,10 +37,10 @@ def get_pc_window_info(config):
             data = json.loads(response.read().decode('utf-8'))
             return data
     except urllib.error.URLError as e:
-        print(f"无法连接到PC服务 ({pc_ip}:{pc_port}): {e}")
+        log(f"无法连接到PC服务 ({pc_ip}:{pc_port}): {e}")
         return None
     except Exception as e:
-        print(f"获取PC窗口信息出错: {e}")
+        log(f"获取PC窗口信息出错: {e}")
         return None
 
 # 加载配置文件
@@ -44,10 +49,10 @@ def load_config():
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
             config = yaml.safe_load(f) or {}
-        print(f"配置文件已加载: {config_path}")
+        log(f"配置文件已加载: {config_path}")
         return config
     except FileNotFoundError:
-        print(f"配置文件未找到: {config_path}，将创建默认配置并保存。")
+        log(f"配置文件未找到: {config_path}，将创建默认配置并保存。")
         default_content = (
             "# *号为必填项\n"
             "#是否开启电脑端读取窗口信息服务 *\n"
@@ -67,13 +72,13 @@ def load_config():
             with open(config_path, 'w', encoding='utf-8') as f:
                 f.write(default_content)
             config = yaml.safe_load(default_content) or {}
-            print(f"已生成默认配置文件: {config_path}")
+            log(f"已生成默认配置文件: {config_path}")
             return config
         except Exception as e:
-            print(f"无法创建默认配置文件: {e}")
+            log(f"无法创建默认配置文件: {e}")
             return None
     except Exception as e:
-        print(f"无法加载配置文件: {e}")
+        log(f"无法加载配置文件: {e}")
         return None
 
 # 手机端请求处理器（5202端口）
@@ -103,7 +108,7 @@ class MobileHandler(BaseHTTPRequestHandler):
             }, ensure_ascii=False)
             self.wfile.write(response.encode('utf-8'))
             
-            print(f"[手机端] 接收到应用信息: {data.get('app', '')}")
+            log(f"[手机端] 接收到应用信息: {data.get('app', '')}")
         
         except Exception as e:
             self.send_response(400)
@@ -173,7 +178,7 @@ class MainHandler(BaseHTTPRequestHandler):
         
         # 发送响应
         self.wfile.write(response.encode('utf-8'))
-        print(f"[主服务] 返回PC窗口: {pc_window} | 手机应用: {mobile_app_info['app']} | si: {si}")
+        log(f"[主服务] 返回PC窗口: {pc_window} | 手机应用: {mobile_app_info['app']} | si: {si}")
     
     def log_message(self, format, *args):
         # 抑制默认日志输出
@@ -183,7 +188,7 @@ class MainHandler(BaseHTTPRequestHandler):
 def run_mobile_server(port):
     server_address = ('', port)
     httpd = HTTPServer(server_address, MobileHandler)
-    print(f"手机端监听服务已在端口 {port} 启动（接收手机app信息）")
+    log(f"手机端监听服务已在端口 {port} 启动（接收手机app信息）")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -194,7 +199,7 @@ def run_main_server(port, config):
     httpd = HTTPServer(server_address, MainHandler)
     # 将配置保存到服务器实例中
     httpd.config = config
-    print(f"主服务已在端口 {port} 启动（返回pc和mobile信息）")
+    log(f"主服务已在端口 {port} 启动（返回pc和mobile信息）")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -206,18 +211,18 @@ if __name__ == '__main__':
     config = load_config()
     
     if not config:
-        print("使用默认配置...")
+        log("使用默认配置...")
         mobile_port = 5202
         main_port = 5203
     else:
         mobile_port = config.get('mobile_listen_port', 5202)
         main_port = config.get('server_external_port', 5203)
     
-    print("=" * 50)
-    print("PC与手机信息同步服务器")
-    print("=" * 50)
-    print("按 Ctrl+C 停止服务")
-    print("=" * 50)
+    log("=" * 50)
+    log("PC与手机信息同步服务器")
+    log("=" * 50)
+    log("按 Ctrl+C 停止服务")
+    log("=" * 50)
     
     # 启动手机端监听服务（5202）
     if config is None or config.get('enable_mobile_listen_service', True):
@@ -228,6 +233,6 @@ if __name__ == '__main__':
     try:
         run_main_server(main_port, config)
     except KeyboardInterrupt:
-        print("\n\n正在停止服务...")
-        print("服务已停止")
+        log("\n\n正在停止服务...")
+        log("服务已停止")
         sys.exit(0)
