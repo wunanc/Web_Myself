@@ -40,22 +40,38 @@ def get_pc_window_info(config):
 
 # 加载配置文件
 def load_config():
+    config_path = "config.yml"
     try:
-        # 获取脚本所在目录
-        script_dir = __file__
-        if script_dir == '<stdin>':
-            # 如果直接运行，使用当前目录
-            config_path = 'config.yml'
-        else:
-            # 使用脚本同目录的config.yml
-            script_dir = __file__.replace('\\', '/')
-            config_dir = '/'.join(script_dir.split('/')[:-1])
-            config_path = f"{config_dir}/config.yml"
-        
         with open(config_path, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
+            config = yaml.safe_load(f) or {}
         print(f"配置文件已加载: {config_path}")
         return config
+    except FileNotFoundError:
+        print(f"配置文件未找到: {config_path}，将创建默认配置并保存。")
+        default_content = (
+            "# *号为必填项\n"
+            "#是否开启电脑端读取窗口信息服务 *\n"
+            "enable_windowsPC_service: true\n"
+            "#电脑端ip地址 *\n"
+            "windowsPC_service_ip: 127.0.0.1\n"
+            "#电脑端端口号 *\n"
+            "windowsPC_service_port: 5201\n\n"
+            "#是否开启手机端监听服务 *\n"
+            "enable_mobile_listen_service: true\n"
+            "#手机端监听端口号 *\n"
+            "mobile_listen_port: 5202\n\n"
+            "#服务器外部访问端口 *\n"
+            "server_external_port: 5203\n"
+        )
+        try:
+            with open(config_path, 'w', encoding='utf-8') as f:
+                f.write(default_content)
+            config = yaml.safe_load(default_content) or {}
+            print(f"已生成默认配置文件: {config_path}")
+            return config
+        except Exception as e:
+            print(f"无法创建默认配置文件: {e}")
+            return None
     except Exception as e:
         print(f"无法加载配置文件: {e}")
         return None
@@ -105,6 +121,15 @@ class MobileHandler(BaseHTTPRequestHandler):
 
 # 主服务器请求处理器（5203端口）
 class MainHandler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        # 处理 CORS 预检请求
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Max-Age', '3600')
+        self.end_headers()
+    
     def do_GET(self):
         global si
         
@@ -115,6 +140,8 @@ class MainHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'application/json; charset=utf-8')
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
         
         # 获取PC窗口信息（从远程PC服务）

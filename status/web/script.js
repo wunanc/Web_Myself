@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Project Sleepy 状态面板已加载');
     
     // API 配置
-    const API_URL = 'http://127.0.0.1:5203';
+    const API_URL = 'http://d5.mcksj.top:36669/';
     
     // 获取状态数据
     function fetchStatusData() {
