@@ -45,7 +45,7 @@ def get_pc_window_info(config):
 
 # 加载配置文件
 def load_config():
-    config_path = "config.yml"
+    config_path = "./config.yml"
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
             config = yaml.safe_load(f) or {}
@@ -64,7 +64,9 @@ def load_config():
             "#是否开启手机端监听服务 *\n"
             "enable_mobile_listen_service: true\n"
             "#手机端监听端口号 *\n"
-            "mobile_listen_port: 5202\n\n"
+            "mobile_listen_port: 5202\n"
+            "#手机监听token（留空则不验证）\n"
+            "mobile_listen_token: 1234\n\n"
             "#服务器外部访问端口 *\n"
             "server_external_port: 5203\n"
         )
@@ -90,6 +92,26 @@ class MobileHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(content_length).decode('utf-8')
             data = json.loads(body)
+            
+            # 获取配置
+            config = getattr(self.server, 'config', None)
+            
+            # 验证token
+            if config and config.get('mobile_listen_token'):
+                expected_token = config.get('mobile_listen_token', '')
+                provided_token = data.get('token', '')
+                
+                if provided_token != expected_token:
+                    self.send_response(401)  # 未授权
+                    self.send_header('Content-type', 'application/json; charset=utf-8')
+                    self.end_headers()
+                    response = json.dumps({
+                        "status": "error",
+                        "message": "Invalid token"
+                    }, ensure_ascii=False)
+                    self.wfile.write(response.encode('utf-8'))
+                    log(f"[手机端] Token验证失败: 期望='{expected_token}', 收到='{provided_token}'")
+                    return
             
             # 存储手机app信息
             mobile_app_info["app"] = data.get("app", "")
@@ -119,6 +141,15 @@ class MobileHandler(BaseHTTPRequestHandler):
                 "message": str(e)
             }, ensure_ascii=False)
             self.wfile.write(response.encode('utf-8'))
+    
+    def do_OPTIONS(self):
+        # 处理 CORS 预检请求
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Max-Age', '3600')
+        self.end_headers()
     
     def log_message(self, format, *args):
         # 抑制默认日志输出
@@ -185,9 +216,11 @@ class MainHandler(BaseHTTPRequestHandler):
         pass
 
 # 启动服务器线程
-def run_mobile_server(port):
+def run_mobile_server(port, config):
     server_address = ('', port)
     httpd = HTTPServer(server_address, MobileHandler)
+    # 将配置保存到服务器实例中
+    httpd.config = config
     log(f"手机端监听服务已在端口 {port} 启动（接收手机app信息）")
     try:
         httpd.serve_forever()
@@ -226,7 +259,7 @@ if __name__ == '__main__':
     
     # 启动手机端监听服务（5202）
     if config is None or config.get('enable_mobile_listen_service', True):
-        mobile_thread = threading.Thread(target=run_mobile_server, args=(mobile_port,), daemon=True)
+        mobile_thread = threading.Thread(target=run_mobile_server, args=(mobile_port, config), daemon=True)
         mobile_thread.start()
     
     # 启动主服务（5203）

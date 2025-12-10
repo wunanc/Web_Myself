@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新UI
     function updateUI(data) {
-        // 更新PC状态（37行）- 蓝色
+        // 更新PC状态（37行）
         const pcStatus = document.querySelector('.pc-status');
         if (pcStatus) {
             pcStatus.textContent = data.pc;
             pcStatus.style.color = '#4ef34eff';
         }
         
-        // 更新iPhone状态（41行）- 蓝色
+        // 更新iPhone状态（41行）
         const iphoneStatus = document.querySelector('.iphone-status');
         if (iphoneStatus) {
             iphoneStatus.textContent = data.mobile;
