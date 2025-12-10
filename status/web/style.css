@@ -79,6 +79,39 @@ body::before {
     background-color: rgba(255, 255, 255, 0.12); /* 悬停时稍微加深 */
 }
 
+/* 信息框4作为可点击链接的样式 */
+.info-box.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.info-box.clickable:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 添加一个箭头图标表示可点击 */
+.info-box.clickable::after {
+    /*content: '↗';*/
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.info-box.clickable:hover::after {
+    opacity: 1;
+}
+
+/* 确保信息框4有相对定位，以便伪元素定位 */
+#box4 {
+    position: relative;
+}
+
 /* 信息框内容 */
 .content {
     display: flex;

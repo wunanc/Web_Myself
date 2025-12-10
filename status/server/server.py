@@ -65,7 +65,7 @@ def load_config():
             "enable_mobile_listen_service: true\n"
             "#手机端监听端口号 *\n"
             "mobile_listen_port: 5202\n"
-            "#手机监听token（留空则不验证）\n"
+            "#手机监听token(留空则不验证)\n"
             "mobile_listen_token: 1234\n\n"
             "#服务器外部访问端口 *\n"
             "server_external_port: 5203\n"

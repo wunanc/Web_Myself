@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (pcStatus) {
             pcStatus.textContent = data.pc;
             pcStatus.style.color = '#4ef34eff';
+            console.log('PC状态已更新');
         }
         
         // 更新iPhone状态（41行）
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (iphoneStatus) {
             iphoneStatus.textContent = data.mobile;
             iphoneStatus.style.color = '#4ef34eff';
+            console.log('iPhone状态已更新');
         }
         
         // 获取状态指示灯
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // si为False时显示"活着"，保持白色，绿点保持绿色
             statusText.textContent = '活着';
-            statusText.style.color = '#ffffff';
+            statusText.style.color = '#78ff67d0';
             
             // 绿点恢复绿色
             if (statusDot) {
@@ -70,15 +72,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // 添加简单的交互效果
     const infoBoxes = document.querySelectorAll('.info-box');
     
-    // 为每个信息框添加点击效果
+    // 为每个信息框添加点击效果（除了信息框4，因为它已经有自己的点击事件）
     infoBoxes.forEach(box => {
-        box.addEventListener('click', function() {
+        if (box.id !== 'box4') {
+            box.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        }
+    });
+    
+    // 为信息框4添加点击跳转功能
+    const box4 = document.getElementById('box4');
+    if (box4) {
+        // 添加可点击样式类
+        box4.classList.add('clickable');
+        
+        // 添加点击事件
+        box4.addEventListener('click', function() {
+            // 跳转到GitHub仓库
+            window.open('https://github.com/wunanc/Web_Myself', '_blank');
+            
+            // 添加点击反馈效果
             this.style.transform = 'scale(0.98)';
+            this.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+            
             setTimeout(() => {
                 this.style.transform = '';
+                this.style.backgroundColor = '';
             }, 200);
         });
-    });
+        
+        // 添加键盘访问支持
+        box4.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                this.click();
+            }
+        });
+        
+        // 添加可访问性属性
+        box4.setAttribute('tabindex', '0');
+        box4.setAttribute('role', 'button');
+        box4.setAttribute('aria-label', '跳转到GitHub仓库页面');
+    }
     
     // 状态指示灯闪烁效果（可选）
     const statusDot = document.querySelector('.status-dot');
@@ -100,7 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // 启动状态指示灯效果
-    startStatusBlink();
+    if (statusDot) {
+        startStatusBlink();
+    }
     
     // 添加简单的键盘快捷键
     document.addEventListener('keydown', function(event) {
@@ -108,13 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.key === 'Escape') {
             if (blinkInterval) {
                 clearInterval(blinkInterval);
-                statusDot.style.boxShadow = '0 0 10px rgba(46, 204, 113, 0.7)';
+                if (statusDot) {
+                    statusDot.style.boxShadow = '0 0 10px rgba(46, 204, 113, 0.7)';
+                }
                 console.log('状态指示灯闪烁已停止');
-            } else {
+            } else if (statusDot) {
                 startStatusBlink();
                 console.log('状态指示灯闪烁已启动');
             }
         }
     });
-    
 });
