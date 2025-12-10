@@ -1,1 +1,2 @@
 python windowsPC.py
+pause
