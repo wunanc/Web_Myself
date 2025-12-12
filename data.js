@@ -1,22 +1,22 @@
 window.languageStats = {
-  "updated": "2025-12-11T16:30:44.809Z",
+  "updated": "2025-12-12T16:25:47.575Z",
   "percent": {
-    "Python": 3,
-    "Java": 93,
+    "Python": 4,
+    "Java": 92,
     "TypeScript": 1,
-    "CSS": 1,
+    "CSS": 2,
     "Vue": 0,
     "HTML": 2,
     "JavaScript": 1,
     "Batchfile": 0
   },
   "raw": {
-    "Python": 39671,
+    "Python": 41464,
     "Java": 1056506,
     "TypeScript": 7935,
-    "CSS": 6002,
+    "CSS": 19102,
     "Vue": 181,
-    "HTML": 25294,
+    "HTML": 22515,
     "JavaScript": 5896,
     "Batchfile": 47
   }
