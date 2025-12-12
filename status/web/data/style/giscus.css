@@ -1,0 +1,228 @@
+/*!
+ * 修改 Giscus 评论区样式以匹配网页的毛玻璃效果
+ * 基于 GitHub's Dark Dimmed theme 修改
+ */
+main {
+    /* 调整颜色变量以匹配毛玻璃效果 */
+    --color-prettylights-syntax-comment: #8a9ba8;
+    --color-prettylights-syntax-constant: #6cb6ff;
+    --color-prettylights-syntax-entity: #b39ddb;
+    --color-prettylights-syntax-storage-modifier-import: #b0bec5;
+    --color-prettylights-syntax-entity-tag: #81c784;
+    --color-prettylights-syntax-keyword: #ff8a80;
+    --color-prettylights-syntax-string: #80deea;
+    --color-prettylights-syntax-variable: #ffcc80;
+    --color-prettylights-syntax-brackethighlighter-unmatched: #ff5252;
+    --color-prettylights-syntax-invalid-illegal-text: #cfd8dc;
+    --color-prettylights-syntax-invalid-illegal-bg: #922323;
+    --color-prettylights-syntax-carriage-return-text: #cfd8dc;
+    --color-prettylights-syntax-carriage-return-bg: #ad2e2c;
+    --color-prettylights-syntax-string-regexp: #81c784;
+    --color-prettylights-syntax-markup-list: #ffd54f;
+    --color-prettylights-syntax-markup-heading: #64b5f6;
+    --color-prettylights-syntax-markup-italic: #b0bec5;
+    --color-prettylights-syntax-markup-bold: #b0bec5;
+    --color-prettylights-syntax-markup-deleted-text: #ffccbc;
+    --color-prettylights-syntax-markup-deleted-bg: #78191b;
+    --color-prettylights-syntax-markup-inserted-text: #c8e6c9;
+    --color-prettylights-syntax-markup-inserted-bg: #1b4721;
+    --color-prettylights-syntax-markup-changed-text: #ffe0b2;
+    --color-prettylights-syntax-markup-changed-bg: #682d0f;
+    --color-prettylights-syntax-markup-ignored-text: #b0bec5;
+    --color-prettylights-syntax-markup-ignored-bg: #1565c0;
+    --color-prettylights-syntax-meta-diff-range: #b39ddb;
+    --color-prettylights-syntax-brackethighlighter-angle: #8a9ba8;
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #607d8b;
+    --color-prettylights-syntax-constant-other-reference-link: #80deea;
+    
+    /* 主要背景颜色 - 调整为毛玻璃效果 */
+    --color-canvas-default: rgba(25, 39, 52, 0.4) !important;
+    --color-canvas-overlay: rgba(30, 40, 55, 0.5) !important;
+    --color-canvas-inset: rgba(20, 30, 45, 0.5) !important;
+    --color-canvas-subtle: rgba(35, 50, 65, 0.4) !important;
+    
+    /* 文字颜色 - 调整为浅色以适应毛玻璃背景 */
+    --color-fg-default: rgba(255, 255, 255, 0.9) !important;
+    --color-fg-muted: rgba(255, 255, 255, 0.7) !important;
+    --color-fg-subtle: rgba(255, 255, 255, 0.6) !important;
+    
+    /* 边框颜色 */
+    --color-border-default: rgba(255, 255, 255, 0.15) !important;
+    --color-border-muted: rgba(255, 255, 255, 0.1) !important;
+    
+    /* 按钮颜色 - 调整为半透明 */
+    --color-btn-bg: rgba(55, 62, 71, 0.5) !important;
+    --color-btn-border: rgba(205, 217, 229, 0.1) !important;
+    --color-btn-hover-bg: rgba(68, 76, 86, 0.6) !important;
+    --color-btn-hover-border: rgba(118, 131, 144, 0.3) !important;
+    --color-btn-primary-bg: rgba(52, 125, 57, 0.7) !important;
+    --color-btn-primary-hover-bg: rgba(70, 149, 74, 0.8) !important;
+    
+    /* 其他颜色 */
+    --color-accent-fg: rgba(83, 155, 245, 0.9) !important;
+    --color-accent-emphasis: rgba(49, 109, 202, 0.9) !important;
+    --color-success-fg: rgba(87, 171, 90, 0.9) !important;
+    --color-danger-fg: rgba(229, 83, 75, 0.9) !important;
+    --color-attention-fg: rgba(198, 144, 38, 0.9) !important;
+    
+    /* 扩展颜色 */
+    --color-social-reaction-bg-hover: rgba(55, 62, 71, 0.5);
+    --color-social-reaction-bg-reacted-hover: rgba(20, 61, 121, 0.6);
+}
+
+/* 整个评论区容器 */
+main {
+    background-color: transparent !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* 评论区内部容器 */
+.gsc-main {
+    backdrop-filter: blur(15px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(15px) saturate(160%) !important;
+    background-color: rgba(25, 39, 52, 0.4) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 评论框 */
+.gsc-comment-box {
+    background-color: rgba(30, 40, 55, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 评论项 */
+.gsc-timeline {
+    background-color: transparent !important;
+}
+
+.gsc-comment {
+    background-color: rgba(35, 50, 65, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    margin-bottom: 12px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    padding: 12px !important;
+}
+
+/* 评论头部 */
+.gsc-comment-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* 评论内容 */
+.gsc-comment-content {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 评论元数据（时间、回复等） */
+.gsc-comment-metadata {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* 按钮样式 */
+.gsc-reply-button, .gsc-load-more-button {
+    background-color: rgba(55, 62, 71, 0.5) !important;
+    border: 1px solid rgba(205, 217, 229, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 6px !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    transition: all 0.2s ease !important;
+}
+
+.gsc-reply-button:hover, .gsc-load-more-button:hover {
+    background-color: rgba(68, 76, 86, 0.6) !important;
+    border-color: rgba(118, 131, 144, 0.3) !important;
+}
+
+/* 输入框 */
+.gsc-comment-box textarea, .gsc-comment-box input {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 6px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+.gsc-comment-box textarea:focus, .gsc-comment-box input:focus {
+    border-color: rgba(83, 155, 245, 0.5) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(83, 155, 245, 0.2) !important;
+}
+
+/* 链接样式 */
+.gsc-comment a, .gsc-header a {
+    color: rgba(83, 155, 245, 0.9) !important;
+    text-decoration: none !important;
+}
+
+.gsc-comment a:hover, .gsc-header a:hover {
+    text-decoration: underline !important;
+}
+
+/* 代码块样式 */
+.gsc-comment pre, .gsc-comment code {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+/* 引用块样式 */
+.gsc-comment blockquote {
+    border-left: 3px solid rgba(83, 155, 245, 0.5) !important;
+    background-color: rgba(83, 155, 245, 0.1) !important;
+    padding: 8px 12px !important;
+    margin: 8px 0 !important;
+    border-radius: 0 6px 6px 0 !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+/* 隐藏某些元素（可选） */
+.gsc-reactions-count {
+    display: none !important;
+}
+
+/* 调整时间线顺序 */
+.gsc-timeline {
+    flex-direction: column-reverse !important;
+}
+
+.gsc-header {
+    padding-bottom: 1rem !important;
+}
+
+.gsc-comments > .gsc-header {
+    order: 1 !important;
+}
+
+.gsc-comments > .gsc-comment-box {
+    margin-bottom: 1rem !important;
+    order: 2 !important;
+}
+
+.gsc-comments > .gsc-timeline {
+    order: 3 !important;
+}
+
+/* 加载动画背景 */
+main .gsc-loading-image {
+    background-image: url(https://github.githubassets.com/images/mona-loading-dimmed.gif) !important;
+}
+
+/* 分页加载器 */
+main .pagination-loader-container {
+    background-image: url(https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg) !important;
+}

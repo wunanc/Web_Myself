@@ -3,13 +3,6 @@ font-family: 'minecraft';
 src: url('data/fonts/minecraft.ttf') format('truetype');
 }
 
-/*
-.minecraft-font {
-font-family: 'minecraft';
-font-size: 24px;
-}
-*/
-
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +21,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 30px;
 }
 
 /* 添加深色遮罩层，确保文字可读性 */
@@ -39,10 +32,149 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2); /* 轻微遮罩，增强背景图上的文字可读性 */
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: -1;
 }
 
+/* 三栏布局容器 */
+.three-column-container {
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    gap: 50px;
+    min-height: 80vh;
+}
+
+/* 侧边栏通用样式 - 增加宽度 */
+.left-sidebar {
+    flex: 0 0 460px; /* 增加到380px，更宽 */
+    display: flex;
+    flex-direction: column;
+    margin-left: -15px;
+}
+
+.right-sidebar {
+    flex: 0 0 460px; /* 增加到380px，更宽 */
+    display: flex;
+    flex-direction: column;
+    margin-right: -15px;
+}
+
+/* 中间主内容 */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 0; /* 防止中间内容被压缩 */
+}
+
+/* 左侧边栏盒子 */
+.sidebar-box {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px) saturate(160%);
+    -webkit-backdrop-filter: blur(15px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    height: 100%; /* 确保填满侧边栏高度 */
+}
+
+.sidebar-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-title {
+    font-size: 1.8rem; /* 增大标题字体 */
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.sidebar-text {
+    font-size: 1.2rem; /* 增大文本字体 */
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 25px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.sidebar-features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 增加间距 */
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 18px; /* 增加内边距 */
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px; /* 增加圆角 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.feature-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(8px); /* 增加悬移动画距离 */
+}
+
+.feature-item i {
+    color: #78ff67d0;
+    font-size: 1.4rem; /* 增大图标 */
+    width: 28px;
+    text-align: center;
+}
+
+.feature-item span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem; /* 增大文字 */
+    font-weight: 500;
+}
+
+.sidebar-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px; /* 增加间距 */
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 15px; /* 增加内边距 */
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px; /* 增加圆角 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-label {
+    display: block;
+    font-size: 1rem; /* 增大标签字体 */
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.6rem; /* 增大数值字体 */
+    font-weight: 600;
+    color: #78ff67d0;
+}
+
+/* 中间内容区保持原有样式 */
 .container {
     width: 100%;
     max-width: 550px;
@@ -59,15 +191,15 @@ body::before {
     gap: 16px;
 }
 
-/* 单个信息框样式 - 改为更透明、边框更不明显的浅色毛玻璃 */
+/* 单个信息框样式 */
 .info-box {
-    background-color: rgba(255, 255, 255, 0.08); /* 改为0.08，更透明 */
+    background-color: rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 24px 28px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* 阴影更淡 */
-    backdrop-filter: blur(15px) saturate(160%); /* 增加模糊到15px */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px) saturate(160%);
     -webkit-backdrop-filter: blur(15px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.12); /* 边框改为0.12不透明度 */
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -76,7 +208,7 @@ body::before {
 .info-box:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    background-color: rgba(255, 255, 255, 0.12); /* 悬停时稍微加深 */
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* 信息框4作为可点击链接的样式 */
@@ -94,7 +226,7 @@ body::before {
 
 /* 添加一个箭头图标表示可点击 */
 .info-box.clickable::after {
-    /*content: '↗';*/
+    content: '↗';
     position: absolute;
     top: 20px;
     right: 20px;
@@ -163,7 +295,7 @@ body::before {
 }
 
 .status-dot.active {
-    background-color: #2ecc71; /* 绿色表示醒着 */
+    background-color: #2ecc71;
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
 }
 
@@ -235,7 +367,103 @@ body::before {
     margin-top: 8px;
 }
 
+/* 右侧评论区样式 - 调整以适应更宽的侧边栏 */
+.giscus-section {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 25px; /* 增加内边距 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px) saturate(160%);
+    -webkit-backdrop-filter: blur(15px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    height: 100%; /* 填满侧边栏高度 */
+}
+
+.giscus {
+    width: 100%;
+    min-height: 200px; /* 增加最小高度 */
+}
+
+.section-header {
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+.section-header h3 {
+    font-size: 1.8rem; /* 增大标题字体 */
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.section-header h3 i {
+    color: #78ff67d0;
+    font-size: 1.8rem; /* 增大图标 */
+}
+
+.section-subtitle {
+    font-size: 1.1rem; /* 增大副标题字体 */
+    color: rgba(255, 255, 255, 0.7);
+}
+
 /* 响应式调整 */
+@media (max-width: 1400px) {
+    .three-column-container {
+        max-width: 1400px;
+        gap: 40px;
+    }
+    
+    .left-sidebar, .right-sidebar {
+        flex: 0 0 340px; /* 中等屏幕稍微减小 */
+    }
+}
+
+@media (max-width: 1200px) {
+    .three-column-container {
+        flex-direction: column;
+        max-width: 800px;
+        gap: 30px;
+    }
+    
+    .left-sidebar, .right-sidebar {
+        flex: none;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .left-sidebar {
+        order: 2;
+    }
+    
+    .right-sidebar {
+        order: 3;
+        margin-top: 20px;
+    }
+    
+    .main-content {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    
+    .three-column-container {
+        gap: 20px;
+    }
+}
+
 @media (max-width: 600px) {
     .container {
         max-width: 90%;
@@ -251,5 +479,19 @@ body::before {
     
     .status-text, .mac-info {
         font-size: 1.4rem;
+    }
+    
+    .sidebar-features {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .feature-item {
+        flex: 1;
+        min-width: 160px; /* 增大最小宽度 */
+    }
+    
+    .sidebar-stats {
+        flex-direction: column;
     }
 }

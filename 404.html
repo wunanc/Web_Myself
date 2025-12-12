@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 - Minecraft 404</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Press Start 2P', cursive, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%232c3e20" width="50" height="50" x="0" y="0"/><rect fill="%232c3e20" width="50" height="50" x="50" y="50"/><rect fill="%233b5d2c" width="50" height="50" x="50" y="0"/><rect fill="%233b5d2c" width="50" height="50" x="0" y="50"/></svg>');
+            background-size: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .error-code {
+            font-size: 10rem;
+            color: #e74c3c;
+            text-shadow: 
+                5px 5px 0 #000,
+                10px 10px 0 rgba(231, 76, 60, 0.3);
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: #f1c40f;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 30px;
+        }
+        
+        .error-message {
+            background: rgba(30, 40, 20, 0.8);
+            border: 6px solid #5d4037;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .error-message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #8b4513, #7ba55c, #8b4513);
+        }
+        
+        .error-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .minecraft-btn {
+            display: inline-block;
+            background: linear-gradient(to bottom, #7ba55c, #3b5d2c);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            padding: 15px 30px;
+            border: 4px solid #5d4037;
+            border-radius: 0;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: inset 0 -6px 0 #2c3e20;
+            transition: all 0.1s ease;
+            letter-spacing: 1px;
+            cursor: pointer;
+            min-width: 220px;
+        }
+        
+        .minecraft-btn:hover {
+            background: linear-gradient(to bottom, #8fbc71, #4a7340);
+            transform: translateY(-5px);
+            box-shadow: inset 0 -3px 0 #2c3e20;
+        }
+        
+        .minecraft-btn:active {
+            transform: translateY(2px);
+            box-shadow: inset 0 -1px 0 #2c3e20;
+        }
+        
+        .minecraft-btn i {
+            margin-right: 10px;
+        }
+        
+        .minecraft-btn.home {
+            background: linear-gradient(to bottom, #f1c40f, #d35400);
+            box-shadow: inset 0 -6px 0 #7d6608;
+        }
+        
+        .minecraft-btn.home:hover {
+            background: linear-gradient(to bottom, #f39c12, #e67e22);
+            box-shadow: inset 0 -3px 0 #7d6608;
+        }
+        
+        .minecraft-btn.report {
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            box-shadow: inset 0 -6px 0 #1d5f8a;
+        }
+        
+        .minecraft-btn.report:hover {
+            background: linear-gradient(to bottom, #5dade2, #3498db);
+            box-shadow: inset 0 -3px 0 #1d5f8a;
+        }
+        
+        .minecraft-btn.bing {
+            background: linear-gradient(to bottom, #0078d7, #106ebe);
+            box-shadow: inset 0 -6px 0 #0a4a8a;
+        }
+        
+        .minecraft-btn.bing:hover {
+            background: linear-gradient(to bottom, #1a86e0, #0078d7);
+            box-shadow: inset 0 -3px 0 #0a4a8a;
+        }
+        
+        .minecraft-character {
+            position: absolute;
+            width: 120px;
+            height: 180px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%23333" x="8" y="16" width="16" height="8"/><rect fill="%23333" x="40" y="16" width="16" height="8"/><rect fill="%23333" x="16" y="24" width="32" height="32"/><rect fill="%237ba55c" x="24" y="8" width="16" height="16"/><rect fill="%237ba55c" x="16" y="24" width="32" height="16"/><rect fill="%233b5d2c" x="16" y="40" width="32" height="16"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .character-1 {
+            top: 10%;
+            left: 10%;
+        }
+        
+        .character-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .character-3 {
+            bottom: 15%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+        
+        .character-4 {
+            bottom: 5%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        .creeper {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%23333" x="0" y="0" width="64" height="64"/><rect fill="%2344aa33" x="8" y="8" width="48" height="48"/><rect fill="%23333" x="16" y="16" width="8" height="8"/><rect fill="%23333" x="40" y="16" width="8" height="8"/><rect fill="%23333" x="16" y="32" width="8" height="16"/><rect fill="%23333" x="40" y="32" width="8" height="16"/><rect fill="%23333" x="32" y="32" width="8" height="8"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        .creeper-1 {
+            top: 5%;
+            right: 10%;
+        }
+        
+        .creeper-2 {
+            bottom: 10%;
+            left: 5%;
+            animation-delay: 1.5s;
+        }
+        
+        .block {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .dirt-block {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%23795532" x="0" y="0" width="64" height="64"/><rect fill="%239c7c65" x="0" y="0" width="64" height="16"/></svg>');
+            bottom: 5%;
+            right: 20%;
+        }
+        
+        .grass-block {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%23795532" x="0" y="0" width="64" height="64"/><rect fill="%235da146" x="0" y="0" width="64" height="16"/></svg>');
+            top: 15%;
+            left: 15%;
+        }
+        
+        .stone-block {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%237e7e7e" x="0" y="0" width="64" height="64"/><rect fill="%239e9e9e" x="0" y="0" width="64" height="16"/></svg>');
+            top: 30%;
+            right: 25%;
+        }
+        
+        .diamond-block {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect fill="%2333cccc" x="0" y="0" width="64" height="64"/><rect fill="%234ce3e3" x="0" y="0" width="64" height="16"/></svg>');
+            bottom: 20%;
+            left: 10%;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+        
+        .search-box {
+            background: rgba(30, 40, 20, 0.7);
+            border: 4px solid #5d4037;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .search-box h3 {
+            color: #f1c40f;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            background: #2c3e20;
+            border: 3px solid #5d4037;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: #7ba55c;
+        }
+        
+        .search-btn {
+            background: linear-gradient(to bottom, #7ba55c, #3b5d2c);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            border: 3px solid #5d4037;
+            padding: 0 20px;
+            cursor: pointer;
+            box-shadow: inset 0 -4px 0 #2c3e20;
+            transition: all 0.1s ease;
+        }
+        
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #8fbc71, #4a7340);
+            transform: translateY(-2px);
+            box-shadow: inset 0 -2px 0 #2c3e20;
+        }
+        
+        .search-btn:active {
+            transform: translateY(2px);
+            box-shadow: inset 0 -1px 0 #2c3e20;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            color: #7ba55c;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .bing-logo {
+            width: 100px;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30"><path fill="%230078d7" d="M20,0 L30,0 L30,30 L20,30 L20,0 Z M40,0 L50,0 L50,30 L40,30 L40,0 Z M60,0 L70,0 L70,30 L60,30 L60,0 Z M80,0 L90,0 L90,30 L80,30 L80,0 Z M0,0 L10,0 L10,30 L0,30 L0,0 Z M10,0 L20,0 L20,15 L10,15 L10,0 Z M30,15 L40,15 L40,30 L30,30 L30,15 Z M50,15 L60,15 L60,30 L50,30 L50,15 Z M70,15 L80,15 L80,30 L70,30 L70,15 Z M90,15 L100,15 L100,30 L90,30 L90,15 Z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 1.8rem;
+            }
+            
+            .error-text {
+                font-size: 0.9rem;
+            }
+            
+            .minecraft-btn {
+                font-size: 0.7rem;
+                padding: 12px 20px;
+                min-width: 180px;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .minecraft-character, .creeper {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 漂浮的Minecraft角色 -->
+    <div class="minecraft-character character-1"></div>
+    <div class="minecraft-character character-2"></div>
+    <div class="minecraft-character character-3"></div>
+    <div class="minecraft-character character-4"></div>
+    
+    <!-- 苦力怕元素 -->
+    <div class="creeper creeper-1"></div>
+    <div class="creeper creeper-2"></div>
+    
+    <!-- 方块元素 -->
+    <div class="block dirt-block"></div>
+    <div class="block grass-block"></div>
+    <div class="block stone-block"></div>
+    <div class="block diamond-block"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="error-code">404</div>
+            <h1 class="error-title">页面未找到</h1>
+        </div>
+        
+        <div class="error-message">
+            <p class="error-text">
+                哎呀！看起来你挖错了地方...<br>
+                这个页面就像下界的要塞一样消失了。<br>
+                可能是被苦力怕炸掉了，或者你输入了错误的坐标。
+            </p>
+            
+            <div class="search-box">
+                <h3>使用必应搜索我们的世界</h3>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="输入搜索内容..." autocomplete="off">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="./index.html" class="minecraft-btn home">
+                    <i class="fas fa-home"></i> 返回主基地
+                </a>
+                <a href="mailto:admin@example.com" class="minecraft-btn report">
+                    <i class="fas fa-bug"></i> 报告问题
+                </a>
+                <a href="https://www.bing.com" target="_blank" class="minecraft-btn bing">
+                    <i class="fab fa-microsoft"></i> 访问必应
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 Minecraft服务器 | 用 ❤️ 和 ⛏️ 制作</p>
+            <div class="bing-logo"></div>
+        </div>
+    </div>
+
+    <script>
+        // 添加一些简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorCode = document.querySelector('.error-code');
+            
+            // 404文字抖动效果
+            setInterval(() => {
+                errorCode.style.transform = 'translateX(5px)';
+                setTimeout(() => {
+                    errorCode.style.transform = 'translateX(-5px)';
+                    setTimeout(() => {
+                        errorCode.style.transform = 'translateX(0)';
+                    }, 100);
+                }, 100);
+            }, 5000);
+            
+            // 搜索功能 - 重定向到必应
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            
+            // 搜索按钮点击事件
+            searchBtn.addEventListener('click', function() {
+                searchWithBing();
+            });
+            
+            // 输入框回车事件
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchWithBing();
+                }
+            });
+            
+            // 搜索函数
+            function searchWithBing() {
+                const query = searchInput.value.trim();
+                if (query !== '') {
+                    // 重定向到必应搜索
+                    window.location.href = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                } else {
+                    // 如果没有输入内容，直接打开必应主页
+                    window.location.href = 'https://www.bing.com';
+                }
+            }
+            
+            // 添加一些Minecraft音效（只是模拟）
+            const buttons = document.querySelectorAll('.minecraft-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 这里可以添加点击音效
+                    console.log('Minecraft按钮点击声效');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

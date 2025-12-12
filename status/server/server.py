@@ -1,12 +1,13 @@
 import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading
-import time
 from datetime import datetime
 import sys
 import yaml
 import urllib.request
 import urllib.error
+import ssl
+import os
 
 # 日志输出函数，带时间戳
 def log(message):
@@ -69,6 +70,12 @@ def load_config():
             "mobile_listen_token: 1234\n\n"
             "#服务器外部访问端口 *\n"
             "server_external_port: 5203\n"
+            "#是否启用HTTPS *\n"
+            "enable_https: false\n"
+            "#SSL证书文件路径（同一目录下的cert.pem文件）\n"
+            "ssl_certfile: ./cert.pem\n"
+            "#SSL私钥文件路径（同一目录下的key.pem文件）\n"
+            "ssl_keyfile: ./key.pem\n"
         )
         try:
             with open(config_path, 'w', encoding='utf-8') as f:
@@ -232,7 +239,31 @@ def run_main_server(port, config):
     httpd = HTTPServer(server_address, MainHandler)
     # 将配置保存到服务器实例中
     httpd.config = config
-    log(f"主服务已在端口 {port} 启动（返回pc和mobile信息）")
+    
+    # 检查是否启用HTTPS
+    if config and config.get('enable_https', False):
+        certfile = config.get('ssl_certfile', './cert.pem')
+        keyfile = config.get('ssl_keyfile', './key.pem')
+        
+        # 检查证书文件是否存在
+        if os.path.exists(certfile) and os.path.exists(keyfile):
+            try:
+                # 创建SSL上下文
+                context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+                context.load_cert_chain(certfile=certfile, keyfile=keyfile)
+                
+                # 包装socket
+                httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+                log(f"主服务已在端口 {port} 启动HTTPS（返回pc和mobile信息）")
+            except Exception as e:
+                log(f"启用HTTPS失败: {e}，将使用HTTP")
+                log(f"主服务已在端口 {port} 启动HTTP（返回pc和mobile信息）")
+        else:
+            log(f"证书文件不存在: certfile={certfile}, keyfile={keyfile}")
+            log(f"主服务将在端口 {port} 启动HTTP（返回pc和mobile信息）")
+    else:
+        log(f"主服务已在端口 {port} 启动HTTP（返回pc和mobile信息）")
+    
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -247,12 +278,20 @@ if __name__ == '__main__':
         log("使用默认配置...")
         mobile_port = 5202
         main_port = 5203
+        enable_https = False
     else:
         mobile_port = config.get('mobile_listen_port', 5202)
         main_port = config.get('server_external_port', 5203)
+        enable_https = config.get('enable_https', False)
     
     log("=" * 50)
     log("PC与手机信息同步服务器")
+    if enable_https:
+        log("HTTPS模式已启用")
+        log(f"证书文件: {config.get('ssl_certfile', './cert.pem')}")
+        log(f"私钥文件: {config.get('ssl_keyfile', './key.pem')}")
+    else:
+        log("HTTP模式（未加密）")
     log("=" * 50)
     log("按 Ctrl+C 停止服务")
     log("=" * 50)

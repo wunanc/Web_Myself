@@ -10,8 +10,14 @@ windowsPC_service_port: 5201
 enable_mobile_listen_service: true
 #手机端监听端口号 *
 mobile_listen_port: 5202
-#手机监听token（留空则不验证）
+#手机监听token(留空则不验证)
 mobile_listen_token: 1234
 
 #服务器外部访问端口 *
 server_external_port: 5203
+#是否启用HTTPS *
+enable_https: false
+#SSL证书文件路径（同一目录下的cert.pem文件）
+ssl_certfile: ./cert.pem
+#SSL私钥文件路径（同一目录下的key.pem文件）
+ssl_keyfile: ./key.pem

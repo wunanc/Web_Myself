@@ -6,61 +6,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>呜楠睡似了吗?</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="giscus.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <!-- 四个信息框容器 -->
-        <div class="info-boxes">
-            <!-- 信息框1 -->
-            <div class="info-box" id="box1">
+    <div class="three-column-container">
+        <!-- 左边栏 -->
+        <div class="left-sidebar">
+            <div class="sidebar-box">
                 <div class="content">
-                    <h1 class="title">呜楠睡<ruby>似<rt>sǐ</rt></ruby>了吗?</h1>
-                </div>
-            </div>
-
-            <!-- 信息框2 -->
-            <div class="info-box" id="box2">
-                <div class="content">
-                    <h2 class="status-title">呜楠当前应该:</h2>
-                    <div class="status-indicator">
-                        <span class="status-dot active"></span>
-                        <span class="status-text">似了</span>
+                    <h2 class="sidebar-title">信息栏</h2>
+                    <p class="sidebar-text">这里可以放一些额外的信息或功能</p>
+                    <div class="sidebar-features">
+                        <div class="feature-item">
+                            <i class="fas fa-clock"></i>
+                            <span>最近更新</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-star"></i>
+                            <span>收藏项目</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-link"></i>
+                            <span>相关链接</span>
+                        </div>
+                    </div>
+                    <div class="sidebar-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">访问量</span>
+                            <span class="stat-value">1,234</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">在线人数</span>
+                            <span class="stat-value">5</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 信息框3 -->
-            <div class="info-box" id="box3">
-                <div class="content">
-                    <h2 class="status-title">呜楠的PC:<span class="pc-status">未知</span></h2>
-                    <p class="pc-info"></p>
-                </div>
-                <div class="content">
-                    <h2 class="status-title">呜楠的iPhone:<span class="iphone-status">未知</span></h2>
-                    <p class="pc-info"></p>
+        <!-- 中间主内容 -->
+        <div class="main-content">
+            <div class="container">
+                <!-- 四个信息框容器 -->
+                <div class="info-boxes">
+                    <!-- 信息框1 -->
+                    <div class="info-box" id="box1">
+                        <div class="content">
+                            <h1 class="title">呜楠睡<ruby>似<rt>sǐ</rt></ruby>了吗?</h1>
+                        </div>
+                    </div>
+
+                    <!-- 信息框2 -->
+                    <div class="info-box" id="box2">
+                        <div class="content">
+                            <h2 class="status-title">呜楠当前应该:</h2>
+                            <div class="status-indicator">
+                                <span class="status-dot active"></span>
+                                <span class="status-text">似了</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 信息框3 -->
+                    <div class="info-box" id="box3">
+                        <div class="content">
+                            <h2 class="status-title">呜楠的PC:<span class="pc-status">未知</span></h2>
+                            <p class="pc-info"></p>
+                        </div>
+                        <div class="content">
+                            <h2 class="status-title">呜楠的iPhone:<span class="iphone-status">未知</span></h2>
+                            <p class="pc-info"></p>
+                        </div>
+                    </div>
+
+                    <!-- 信息框4 -->
+                    <div class="info-box" id="box4">
+                        <div class="content">
+                            <p class="license-info">这个项目在MIT许可下开源于GitHub(点击跳转):</p>
+                            <p class="github-link">
+                                <i class="fab fa-github"></i>
+                                wunanc/Web_Myself
+                            </p>
+                            <p class="project-name">Web_Myself</p>
+                            <p class="copyright">©2025 Wunanc 保留所有权利。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 信息框4 -->
-            <div class="info-box" id="box4">
-                <div class="content">
-                    <p class="license-info">这个项目在MIT许可下开源于GitHub(点击跳转):</p>
-                    <p class="github-link">
-                        <i class="fab fa-github"></i>
-                        wunanc/Web_Myself
-                    </p>
-                    <p class="project-name">Web_Myself</p>
-                    <p class="copyright">©2025 Wunanc 保留所有权利。</p>
+        <!-- 右边栏（评论区） -->
+        <div class="right-sidebar">
+            <div class="giscus-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-comments"></i> 评论区</h3>
+                    <p class="section-subtitle">欢迎留下你的想法和评论</p>
                 </div>
+                <div class="giscus"></div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="https://giscus.app/client.js"
+        data-repo="wunanc/Web_Myself"
+        data-repo-id="R_kgDOQkfQ6g"
+        data-category="General"
+        data-category-id="DIC_kwDOQkfQ6s4Czpy3"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="./data/style/giscus.css"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+    </script>
 </body>
 
 </html>
