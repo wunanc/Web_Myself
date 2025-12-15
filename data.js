@@ -1,5 +1,5 @@
 window.languageStats = {
-  "updated": "2025-12-14T16:23:26.369Z",
+  "updated": "2025-12-15T16:31:00.205Z",
   "percent": {
     "Python": 4,
     "Java": 92,
