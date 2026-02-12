@@ -1,5 +1,5 @@
 window.languageStats = {
-  "updated": "2026-02-11T17:04:11.861Z",
+  "updated": "2026-02-12T16:58:21.026Z",
   "percent": {
     "Python": 4,
     "Batchfile": 0,
@@ -13,7 +13,7 @@ window.languageStats = {
   "raw": {
     "Python": 51020,
     "Batchfile": 183,
-    "Java": 1146616,
+    "Java": 1149327,
     "TypeScript": 7935,
     "CSS": 19102,
     "Vue": 181,
