@@ -1,0 +1,38 @@
+name: Update Daily Stats
+
+on:
+  schedule:
+    # 每天 UTC 16:00 运行，即北京时间次日 00:00
+    - cron: '0 16 * * *'
+  workflow_dispatch: # 允许你点击按钮手动立即更新
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: pip install requests
+
+    - name: Run Update Script
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python update_data.py
+
+    - name: Commit and Push Data
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data.json
+        # 如果没有变化则不提交，避免报错
+        git diff --quiet && git diff --staged --quiet || (git commit -m "chore: 每日数据自动更新 (北京时间 00:00)" && git push)

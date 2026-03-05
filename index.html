@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 | Apple Style</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Chart.js 用于渲染语言比例饼图 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- 板块1: 个人简介 -->
+    <section id="hero" class="glass-card">
+        <img src="https://github.com/your-username.png" alt="头像" class="avatar" id="user-avatar">
+        <h1 id="user-name">加载中...</h1>
+        <p class="bio">这里是你的个性签名，可以在 script.js 中修改或者直接改 HTML。</p>
+    </section>
+
+    <!-- 板块2: GitHub 语言使用占比 -->
+    <section class="glass-card">
+        <h2 class="section-title">代码语言占比</h2>
+        <div class="stats-container">
+            <div class="chart-wrapper">
+                <canvas id="languageChart"></canvas>
+            </div>
+            <div id="repo-summary" class="summary-text">
+                正在统计来自 GitHub 的实时数据...
+            </div>
+        </div>
+    </section>
+
+    <!-- 板块3: Minecraft 插件精选 (5+1布局) -->
+    <section class="glass-card">
+        <h2 class="section-title">Minecraft 插件</h2>
+        <div class="project-grid">
+            <!-- 手动修改以下5个板块的内容 -->
+            <a href="#" class="project-item"><h3>插件名称 1</h3><p>简短的功能描述文字，支持多行显示。</p></a>
+            <a href="#" class="project-item"><h3>插件名称 2</h3><p>兼容 1.20.x，支持高度自定义配置。</p></a>
+            <a href="#" class="project-item"><h3>插件名称 3</h3><p>轻量化设计，极速运行不卡服。</p></a>
+            <a href="#" class="project-item"><h3>插件名称 4</h3><p>开源项目，欢迎提交 PR。</p></a>
+            <a href="#" class="project-item"><h3>插件名称 5</h3><p>全自动化的处理流程。</p></a>
+            <!-- 第6个: 更多按钮 -->
+            <a href="https://github.com/your-username" class="project-item more-btn">
+                <span>查看更多插件 →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 板块4: 其他项目精选 (5+1布局) -->
+    <section class="glass-card">
+        <h2 class="section-title">其他精选项目</h2>
+        <div class="project-grid">
+            <a href="#" class="project-item"><h3>工具软件 1</h3><p>解决日常痛点的小程序。</p></a>
+            <a href="#" class="project-item"><h3>网页作品 2</h3><p>响应式设计，极简风格。</p></a>
+            <a href="#" class="project-item"><h3>Python 脚本</h3><p>自动化抓取与分析数据。</p></a>
+            <a href="#" class="project-item"><h3>Mod 开发</h3><p>改变游戏体验的新玩法。</p></a>
+            <a href="#" class="project-item"><h3>个人博客</h3><p>记录技术成长与生活点滴。</p></a>
+            <a href="https://github.com/your-username" class="project-item more-btn">
+                <span>查看所有项目 →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 板块5: B站数据与代表作 -->
+    <section class="glass-card">
+        <h2 class="section-title">B站创作动态</h2>
+        <div class="bilibili-header">
+            <div class="stat-box">
+                <span class="label">粉丝数</span>
+                <span id="bili-fans" class="value">获取中...</span>
+            </div>
+        </div>
+        <div class="video-works">
+            <h3>视频代表作</h3>
+            <div class="video-grid">
+                <!-- 这里手动修改你的代表作视频链接 -->
+                <a href="https://www.bilibili.com" target="_blank" class="video-card">
+                    <div class="video-info">
+                        <h4>视频标题 1</h4>
+                        <p>关于 Minecraft 开发的教程...</p>
+                    </div>
+                </a>
+                <a href="https://www.bilibili.com" target="_blank" class="video-card">
+                    <div class="video-info">
+                        <h4>视频标题 2</h4>
+                        <p>这个作品获得了 X 万播放...</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
