@@ -5,7 +5,7 @@ import time
 
 # --- 配置区 ---
 GH_USER = "wunanc"        # 你的 GitHub 用户名
-BILI_UID = "3493282208008436" # 替换为你真实的 B 站 UID (在空间 URL 中可以看到)
+BILI_UID = "3461562578766467" # 替换为你真实的 B 站 UID (在空间 URL 中可以看到)
 # --------------
 
 def get_github_languages():
