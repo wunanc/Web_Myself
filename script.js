@@ -14,8 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 更新 GitHub 统计描述
             document.getElementById('repo-summary').innerHTML = `
-                GitHub 共有 <strong>${data.github.total_repos}</strong> 个公共项目<br>
-                数据最后同步: ${data.updated_at} (北京时间)
+                GitHub 共有 <strong>${data.github.total_repos}</strong> 个原创项目<br>
+                累计分析了 <strong>${(Object.values(data.github.languages).reduce((a, b) => a + b, 0) / 1024).toFixed(1)} KB</strong> 代码<br>
+                数据最后同步: ${data.updated_at}
             `;
 
             // 渲染语言占比饼图
