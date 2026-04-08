@@ -1,17 +1,17 @@
 {
     "github": {
         "languages": {
-            "Java": 190615,
+            "Java": 274301,
             "Python": 40023,
             "HTML": 4421,
             "CSS": 3465,
             "JavaScript": 2072,
             "Batchfile": 136
         },
-        "total_repos": 10
+        "total_repos": 11
     },
     "bilibili": {
         "follower": 23
     },
-    "updated_at": "2026-04-07 16:55:44"
+    "updated_at": "2026-04-08 16:59:24"
 }
